@@ -8,12 +8,6 @@ class Defines {
   
   public static var BOOL_DEFINES = []; // this stores the names of the fixed defines
   
-  static function __init__():Void {
-  #if macro
-    Compiler.define("BOOL_DEFINES");
-    haxe.macro.Context.warning("Using BOOL_DEFINES", Context.currentPos());
-  #end
-  }
   
   macro static public function asBool(define:String) {
     var v = haxe.macro.Context.definedValue(define);
@@ -23,7 +17,21 @@ class Defines {
     } else return macro false;
   }
   
+  
   #if macro
+  static function __init__():Void {
+    Compiler.define("BOOL_DEFINES");
+    haxe.macro.Context.warning("Using BOOL_DEFINES", Context.currentPos());
+  }
+  
+  static public function fixBoolDefines(defines:Array<String>) {
+    _fixBoolDefines(defines);
+  }
+  
+  static public function addBoolDefines(defines:Array<String>, prefix:String) {
+    _fixBoolDefines(defines, prefix);
+  }
+  
   static function __asBool(define:String) {
     var v = haxe.macro.Context.definedValue(define);
     var isTrue = !(v == null || v == "" || v == "0" || v == "false");
@@ -31,21 +39,7 @@ class Defines {
       return true;
     } else return false;
   }
-  #end
 
-  #if macro
-  static public function fixBoolDefines(defines:Array<String>) {
-    _fixBoolDefines(defines);
-  }
-  #end
-  
-  #if macro
-  static public function addBoolDefines(defines:Array<String>, prefix:String) {
-    _fixBoolDefines(defines, prefix);
-  }
-  #end
-  
-  #if macro
   static function _fixBoolDefines(defines:Array<String>, ?prefix:String) {
     if (BOOL_DEFINES.length == 0) {
       haxe.macro.Compiler.define("BOOL_DEFINES", "1");

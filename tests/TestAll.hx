@@ -9,15 +9,6 @@ class TestAll {
     
     // print defines at start
     trace(Defines.allAsLogString());
-    trace("");
-    trace("BEFORE");
-    trace("  logging='" + haxe.macro.Compiler.getDefine("logging") + "'");
-    
-    //Defines.fixBoolDefines(["logging"]);
-    
-    //trace(Defines.allAsLogString());
-    trace("");
-    trace("AFTER");
     trace("  logging='" + haxe.macro.Compiler.getDefine("logging") + "'");
     
     trace("");
