@@ -3,3 +3,5 @@
 -main TestAll
 -dce full
 -debug
+
+-D logging
