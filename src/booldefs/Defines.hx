@@ -21,7 +21,6 @@ class Defines {
     }
     var v = haxe.macro.Context.definedValue(define);
     var isTrue = !(v == null || v == "" || v == "0" || v == "false");
-    //trace("asBool(" + define + "='" + v + "'): " + isTrue);
     if (isTrue) {
       return macro true;
     } else return macro false;
@@ -31,7 +30,6 @@ class Defines {
   static function __asBool(define:String) {
     var v = haxe.macro.Context.definedValue(define);
     var isTrue = !(v == null || v == "" || v == "0" || v == "false");
-    //trace("__asBool(" + define + "='" + v + "'): " + isTrue);
     if (isTrue) {
       return true;
     } else return false;
@@ -52,9 +50,7 @@ class Defines {
   
   #if macro
   static function _fixBoolDefines(defines:Array<String>, ?prefix:String) {
-    //trace("fixBoolDefines");
     if (BOOL_DEFINES.length == 0) {
-      //trace("ENABLE BOOL_DEFINES");
       haxe.macro.Compiler.define("BOOL_DEFINES", "1");
       BOOL_DEFINES = ["1"];
     }
@@ -63,7 +59,6 @@ class Defines {
     
     for (define in defines) {
       var isTrue = __asBool(define);
-      //trace(define + ": " + isTrue);
       
       if (prefix != null) // create new define with prefix
       {
@@ -72,10 +67,8 @@ class Defines {
       else // overwrite existing define
       { 
         if (!isTrue) {
-          //trace('  FALSE (redefined to "")');
           haxe.macro.Compiler.define(define, "");
         } else {
-          //trace("  TRUE");
         }
       }
     }
