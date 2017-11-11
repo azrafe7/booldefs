@@ -9,16 +9,13 @@ class Defines {
   public static var BOOL_DEFINES = []; // this stores the names of the fixed defines
   
   static function __init__():Void {
+  #if macro
     Compiler.define("BOOL_DEFINES");
     haxe.macro.Context.warning("Using BOOL_DEFINES", Context.currentPos());
+  #end
   }
   
   macro static public function asBool(define:String) {
-    var boolDefines = haxe.macro.Context.definedValue("BOOL_DEFINES");
-    if (boolDefines == null || boolDefines.split(",").indexOf(define) < 0) {
-      haxe.macro.Context.fatalError("ERROR: Cannot use `asBool('" + define + "')`.\n" + 
-        "Try compiling with `--macro booldefs.Defines.fixBoolDefines(['" + define + "'])`", haxe.macro.Context.currentPos());
-    }
     var v = haxe.macro.Context.definedValue(define);
     var isTrue = !(v == null || v == "" || v == "0" || v == "false");
     if (isTrue) {
