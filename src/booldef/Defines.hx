@@ -4,7 +4,7 @@ package booldef;
 class Defines {
   
   macro static public function asBool(define:String) {
-    if (!haxe.macro.Context.defined("fixBoolDefines")) {
+    if (!haxe.macro.Context.defined("FIX_BOOL_DEFINES")) {
       haxe.macro.Context.fatalError("Cannot use `asBool('" + define + "')`.\nTry compiling with `--macro booldef.Defines.fixBoolDefines(['" + define + "'])`", haxe.macro.Context.currentPos());
     }
     var v = haxe.macro.Context.definedValue(define);
@@ -27,8 +27,16 @@ class Defines {
   #end
 
   #if macro
+  static var FIX_BOOL_DEFINES = [];
   static public function fixBoolDefines(defines:Array<String>) {
-    haxe.macro.Compiler.define("fixBoolDefines", "1");
+    if (FIX_BOOL_DEFINES.length == 0) {
+      trace("ENABLE FIX_BOOL_DEFINES");
+      haxe.macro.Compiler.define("FIX_BOOL_DEFINES", "1");
+      FIX_BOOL_DEFINES = ["1"];
+    }
+    FIX_BOOL_DEFINES = FIX_BOOL_DEFINES.concat(defines);
+    haxe.macro.Compiler.define("FIX_BOOL_DEFINES", FIX_BOOL_DEFINES.join(","));
+    
     for (define in defines) {
       var isTrue = __asBool(define);
       trace(define + ": " + isTrue);

@@ -8,7 +8,7 @@ class TestAll {
   static public function main():Void {
     
     // print defines at start
-    //trace(Defines.allAsLogString());
+    trace(Defines.allAsLogString());
     trace("");
     trace("BEFORE");
     trace("  logging='" + haxe.macro.Compiler.getDefine("logging") + "'");
