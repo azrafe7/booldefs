@@ -39,7 +39,19 @@ class Defines {
   #end
 
   #if macro
-  static public function fixBoolDefines(defines:Array<String>, ?prefix:String) {
+  static public function fixBoolDefines(defines:Array<String>) {
+    _fixBoolDefines(defines);
+  }
+  #end
+  
+  #if macro
+  static public function addBoolDefines(defines:Array<String>, prefix:String) {
+    _fixBoolDefines(defines, prefix);
+  }
+  #end
+  
+  #if macro
+  static function _fixBoolDefines(defines:Array<String>, ?prefix:String) {
     //trace("fixBoolDefines");
     if (BOOL_DEFINES.length == 0) {
       //trace("ENABLE BOOL_DEFINES");
