@@ -1,6 +1,6 @@
 package ;
 
-import booldef.Defines;
+import booldefs.Defines;
 
 @:keep
 class TestAll {

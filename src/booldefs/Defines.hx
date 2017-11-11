@@ -1,10 +1,11 @@
-package booldef;
+package booldefs;
 
 
 class Defines {
   
   macro static public function asBool(define:String) {
-    if (!haxe.macro.Context.defined("FIX_BOOL_DEFINES")) {
+    var boolDefines = haxe.macro.Context.definedValue("FIX_BOOL_DEFINES").split(",");
+    if (boolDefines.indexOf(define) < 0) {
       haxe.macro.Context.fatalError("Cannot use `asBool('" + define + "')`.\nTry compiling with `--macro booldef.Defines.fixBoolDefines(['" + define + "'])`", haxe.macro.Context.currentPos());
     }
     var v = haxe.macro.Context.definedValue(define);
